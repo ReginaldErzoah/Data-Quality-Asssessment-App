@@ -7,12 +7,11 @@ import matplotlib.pyplot as plt
 # --- PAGE CONFIG ---
 st.set_page_config(
     page_title="Data Quality & Error Cluster Dashboard",
-    layout="wide",
-    page_icon="🧠"
+    layout="wide"
 )
 
 # --- TITLE & INTRO ---
-st.title("🧠 Data Quality & Error Cluster Analysis Dashboard")
+st.title("Data Quality & Error Cluster Analysis Dashboard")
 st.markdown("""
 Explore data completeness, validity, and accuracy across transactions.
 Identify recurring error clusters by **Location** and **Payment Method**, 
@@ -56,7 +55,7 @@ def load_data():
 df = load_data()
 
 # --- SIDEBAR FILTERS ---
-st.sidebar.header("🔍 Filter Data")
+st.sidebar.header("Filter Data")
 selected_location = st.sidebar.multiselect(
     "Select Location(s):",
     options=df["Location"].dropna().unique(),
@@ -74,7 +73,7 @@ filtered_df = df[
 ]
 
 # --- METRICS SECTION ---
-st.markdown("### 📊 Data Quality Overview")
+st.markdown("###Data Quality Overview")
 
 placeholders = ["UNKNOWN", "ERROR", "", " ", None, np.nan]
 completeness = filtered_df.notna().sum() / len(filtered_df) * 100
@@ -85,9 +84,9 @@ accuracy_score = filtered_df["valid_total"].mean() * 100
 error_rate = filtered_df["has_error"].mean() * 100
 
 col1, col2, col3 = st.columns(3)
-col1.metric("✅ Overall Accuracy", f"{accuracy_score:.2f}%")
-col2.metric("⚠️ Error Rate", f"{error_rate:.2f}%")
-col3.metric("📦 Records Analyzed", f"{len(filtered_df):,}")
+col1.metric("Overall Accuracy", f"{accuracy_score:.2f}%")
+col2.metric("Error Rate", f"{error_rate:.2f}%")
+col3.metric("Records Analyzed", f"{len(filtered_df):,}")
 
 st.divider()
 
@@ -98,11 +97,11 @@ dq_summary = pd.DataFrame({
 })
 dq_summary.loc["Overall_Accuracy"] = [None, round(accuracy_score, 2)]
 
-with st.expander("📋 View Data Quality Summary Table"):
+with st.expander("View Data Quality Summary Table"):
     st.dataframe(dq_summary.style.format("{:.2f}"))
 
 # --- ERROR RATE BY PAYMENT METHOD ---
-st.subheader("💳 Error Rate by Payment Method")
+st.subheader("Error Rate by Payment Method")
 error_by_payment = filtered_df.groupby("Payment Method")["has_error"].mean() * 100
 
 fig, ax = plt.subplots()
@@ -112,7 +111,7 @@ ax.set_xlabel("Error Rate (%)")
 st.pyplot(fig)
 
 # --- ERROR RATE BY LOCATION ---
-st.subheader("📍 Error Rate by Location")
+st.subheader("Error Rate by Location")
 error_by_location = filtered_df.groupby("Location")["has_error"].mean() * 100
 
 fig, ax = plt.subplots()
@@ -122,7 +121,7 @@ ax.set_xlabel("Error Rate (%)")
 st.pyplot(fig)
 
 # --- ERROR CLUSTER HEATMAP ---
-st.subheader("🔥 Error Cluster Heatmap (Location × Payment Method)")
+st.subheader("Error Cluster Heatmap (Location × Payment Method)")
 error_pivot = filtered_df.pivot_table(
     values="has_error",
     index="Location",
@@ -136,7 +135,7 @@ ax.set_title("Error Clusters by Location × Payment Method")
 st.pyplot(fig)
 
 # --- ERROR TREND OVER TIME ---
-st.subheader("📅 Error Rate Over Time")
+st.subheader("Error Rate Over Time")
 filtered_df["Month"] = filtered_df["Transaction Date"].dt.to_period("M")
 error_by_month = filtered_df.groupby("Month")["has_error"].mean() * 100
 
@@ -149,12 +148,12 @@ st.pyplot(fig)
 
 # --- DOWNLOAD BUTTONS ---
 st.divider()
-st.markdown("### 💾 Export Options")
+st.markdown("###Export Options")
 
 # Export filtered data
 csv_all = filtered_df.to_csv(index=False).encode("utf-8")
 st.download_button(
-    label="⬇️ Download Filtered Data (CSV)",
+    label="Download Filtered Data (CSV)",
     data=csv_all,
     file_name="filtered_cafe_sales.csv",
     mime="text/csv"
@@ -164,8 +163,9 @@ st.download_button(
 error_data = filtered_df[filtered_df["has_error"]]
 csv_errors = error_data.to_csv(index=False).encode("utf-8")
 st.download_button(
-    label="🚨 Download Only Error Records (CSV)",
+    label="Download Only Error Records (CSV)",
     data=csv_errors,
     file_name="error_records.csv",
     mime="text/csv"
 )
+
