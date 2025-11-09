@@ -4,14 +4,22 @@
 This project is an interactive Streamlit dashboard that analyzes and visualizes data quality metrics and error clusters in transactional datasets.  
 It helps identify issues in completeness, validity, and accuracy — providing quick insights into where and how data quality problems occur.
 
-The project also serves as a **Data Quality Assessment portfolio** demonstrating the use of:
+For a live demo, check the streamlit app (Here)[].
+
+The project also demonstrates the use of:
 - Python for data preprocessing  
 - Pandas & NumPy for quality checks  
 - Seaborn & Matplotlib for visual insights  
 - Streamlit for interactive visualization and data exploration  
 
 ---
+## Use Case
+This project is ideal for:
+- Data Analysts validating data pipelines
+- BI professionals monitoring data quality in reports
+- Organizations seeking proactive error tracking in transaction systems
 
+ --- 
 ## Features
 **Data Quality Metrics**
 - Completeness and Validity per field  
