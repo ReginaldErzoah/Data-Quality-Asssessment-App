@@ -73,7 +73,7 @@ filtered_df = df[
 ]
 
 # --- METRICS SECTION ---
-st.markdown("###Data Quality Overview")
+st.markdown("### Data Quality Overview")
 
 placeholders = ["UNKNOWN", "ERROR", "", " ", None, np.nan]
 completeness = filtered_df.notna().sum() / len(filtered_df) * 100
@@ -168,6 +168,7 @@ st.download_button(
     file_name="error_records.csv",
     mime="text/csv"
 )
+
 
 
 
