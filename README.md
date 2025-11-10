@@ -31,7 +31,7 @@ This project is ideal for:
 **Visual Error Insights**
 - Error rate by Payment Method  
 - Error rate by Location  
-- Error Cluster Heatmap (Location × Payment Method)  
+- Error Cluster Heatmap (Location-Payment Method)  
 - Error Rate Trend over Time  
 
 **Data Exports**
