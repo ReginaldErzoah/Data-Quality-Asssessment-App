@@ -61,36 +61,46 @@ def load_data():
         (~df["valid_total"])
     )
 
+    # --- Replace missing categorical values for consistency ---
+    df["Location"] = df["Location"].fillna("Unknown")
+    df["Payment Method"] = df["Payment Method"].fillna("Unknown")
+
     return df
 
 
+# --- LOAD DATA ---
 df = load_data()
 
 # --- SIDEBAR FILTERS ---
 st.sidebar.header("Filter Data")
+
+location_options = df["Location"].unique()
+payment_options = df["Payment Method"].unique()
+
 selected_location = st.sidebar.multiselect(
     "Select Location(s):",
-    options=df["Location"].dropna().unique(),
-    default=df["Location"].dropna().unique()
+    options=location_options,
+    default=location_options
 )
 selected_payment = st.sidebar.multiselect(
     "Select Payment Method(s):",
-    options=df["Payment Method"].dropna().unique(),
-    default=df["Payment Method"].dropna().unique()
+    options=payment_options,
+    default=payment_options
 )
 
 filtered_df = df[
     df["Location"].isin(selected_location) &
     df["Payment Method"].isin(selected_payment)
-]
+].copy()
 
 # --- GUARD AGAINST EMPTY FILTER RESULTS ---
 if filtered_df.empty:
     st.warning("No data available for the selected filters.")
     st.stop()
 
-# Make a copy to avoid SettingWithCopyWarning
-filtered_df = filtered_df.copy()
+# --- DEBUG INFO (optional) ---
+# st.write("Rows loaded:", len(df))
+# st.write("Rows after filtering:", len(filtered_df))
 
 # --- METRICS SECTION ---
 st.markdown("### Data Quality Overview")
@@ -198,9 +208,8 @@ st.download_button(
 error_data = filtered_df[filtered_df["has_error"]]
 csv_errors = error_data.to_csv(index=False).encode("utf-8")
 st.download_button(
-    label= "Download Only Error Records (CSV)",
+    label="Download Only Error Records (CSV)",
     data=csv_errors,
     file_name="error_records.csv",
     mime="text/csv"
 )
-
