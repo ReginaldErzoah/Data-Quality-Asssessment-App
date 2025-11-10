@@ -105,7 +105,7 @@ st.subheader("Error Rate by Payment Method")
 error_by_payment = filtered_df.groupby("Payment Method")["has_error"].mean() * 100
 
 fig, ax = plt.subplots()
-sns.barplot(x=error_by_payment.values, y=error_by_payment.index, palette="dark", ax=ax)
+sns.barplot(x=error_by_payment.values, y=error_by_payment.index,color="steelblue", ax=ax)
 ax.set_title("Error Rate by Payment Method")
 ax.set_xlabel("Error Rate (%)")
 st.pyplot(fig)
@@ -115,7 +115,7 @@ st.subheader("Error Rate by Location")
 error_by_location = filtered_df.groupby("Location")["has_error"].mean() * 100
 
 fig, ax = plt.subplots()
-sns.barplot(x=error_by_location.values, y=error_by_location.index, palette="dark", ax=ax)
+sns.barplot(x=error_by_location.values, y=error_by_location.index, color="steelblue", ax=ax)
 ax.set_title("Error Rate by Location")
 ax.set_xlabel("Error Rate (%)")
 st.pyplot(fig)
@@ -148,7 +148,7 @@ st.pyplot(fig)
 
 # --- DOWNLOAD BUTTONS ---
 st.divider()
-st.markdown("###Export Options")
+st.markdown("### Export Options")
 
 # Export filtered data
 csv_all = filtered_df.to_csv(index=False).encode("utf-8")
@@ -168,5 +168,6 @@ st.download_button(
     file_name="error_records.csv",
     mime="text/csv"
 )
+
 
 
