@@ -4,7 +4,7 @@
 This project is an interactive Streamlit dashboard that analyzes and visualizes data quality metrics and error clusters in transactional datasets.  
 It helps identify issues in completeness, validity, and accuracy — providing quick insights into where and how data quality problems occur.
 
-For a live demo, check the streamlit app (Here)[https://data-quality-assess.streamlit.app/].
+For a live demo, check the streamlit app [Here](https://data-quality-assess.streamlit.app/).
 
 The project also demonstrates the use of:
 - Python for data preprocessing  
