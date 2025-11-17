@@ -94,11 +94,21 @@ consistency_score = filtered_df["Transaction_ID_Valid"].mean() * 100
 error_rate = filtered_df["has_error"].mean() * 100
 unique_score = 100 - filtered_df.duplicated().mean() * 100
 
-col1, col2, col3, col4 = st.columns(4)
+dq_score = (
+    completeness.mean() * 0.3 +
+    validity.mean() * 0.3 +
+    accuracy_score * 0.2 +
+    consistency_score * 0.2
+)
+dq_score = round(dq_score, 2)
+
+# Display metrics
+col1, col2, col3, col4, col5 = st.columns(5)
 col1.metric("Accuracy", f"{accuracy_score:.2f}%")
 col2.metric("Error Rate", f"{error_rate:.2f}%")
 col3.metric("Uniqueness", f"{unique_score:.2f}%")
-col4.metric("Transaction ID Consistency", f"{consistency_score:.2f}%")
+col4.metric("Trans. ID Consistency", f"{consistency_score:.2f}%")
+col5.metric("Data Quality Score", f"{dq_score:.2f}%")
 
 st.divider()
 
