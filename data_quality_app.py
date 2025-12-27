@@ -55,9 +55,7 @@ def load_data(file_path="dirty_cafe_sales.csv"):
     df["Transaction_ID_Valid"] = df["Transaction ID"].apply(lambda x: bool(re.match(id_pattern, str(x))))
 
     # Flag rows with any data issues
-    df["has_error"] = (
-        df.isna().any(axis=1) | (~df["valid_total"]) | (~df["Transaction_ID_Valid"])
-    )
+    df["has_error"] = df.isna().any(axis=1) | (~df["valid_total"]) | (~df["Transaction_ID_Valid"])
 
     return df
 
@@ -95,7 +93,7 @@ st.markdown("### Data Quality Overview")
 # COMPLETENESS: % of non-missing values
 completeness = filtered_df.notna().mean() * 100
 
-# VALIDITY: % of values passing rules
+# VALIDITY: proper column-level checks
 validity = pd.Series(dtype=float)
 
 # Numeric columns: must exist and >=0
@@ -106,10 +104,10 @@ for col in numeric_cols:
 # Total consistency
 validity["Total Consistency"] = filtered_df["valid_total"].mean() * 100
 
-# Categorical columns
+# Categorical columns (exclude Transaction ID)
 categorical_cols = filtered_df.select_dtypes(include="object").columns
 for col in categorical_cols:
-    if col not in validity:
+    if col != "Transaction ID":  # consistency already checks this
         validity[col] = filtered_df[col].notna().mean() * 100
 
 # Other metrics
@@ -144,10 +142,8 @@ dq_summary = pd.DataFrame({
 
 with st.expander("View Data Quality Summary Table"):
     st.dataframe(dq_summary.style.format("{:.2f}"))
-    
 
 # ERROR RATE VISUALIZATIONS
-
 # By Payment Method
 st.subheader("Error Rate by Payment Method")
 error_by_payment = filtered_df.groupby("Payment Method")["has_error"].mean() * 100
@@ -176,7 +172,6 @@ error_pivot = filtered_df.pivot_table(
     columns="Payment Method",
     aggfunc="mean"
 ) * 100
-
 fig, ax = plt.subplots(figsize=(8,6))
 sns.heatmap(error_pivot, annot=True, fmt=".1f", cmap="Reds", ax=ax)
 ax.set_title("Error Clusters by Location-Payment Method")
@@ -187,7 +182,6 @@ st.pyplot(fig)
 st.subheader("Error Rate Over Time")
 filtered_df["Month"] = filtered_df["Transaction Date"].dt.to_period("M")
 error_by_month = filtered_df.groupby("Month")["has_error"].mean() * 100
-
 fig, ax = plt.subplots()
 error_by_month.plot(marker="o", color="crimson", ax=ax)
 ax.set_title("Error Rate Over Time")
@@ -227,7 +221,6 @@ st.download_button(
     file_name="filtered_cafe_sales.csv",
     mime="text/csv"
 )
-
 error_data = filtered_df[filtered_df["has_error"]]
 csv_errors = error_data.to_csv(index=False).encode("utf-8")
 st.download_button(
