@@ -19,7 +19,7 @@ st.set_page_config(
 )
 
 # TITLE & INTRO
-st.title("Data Quality & Error Cluster Analysis Dashboard")
+st.title("Data Quality Assessment Dashboard")
 st.markdown("""
 Explore data completeness, validity, and accuracy across transactions.
 Identify recurring error clusters by **Location** and **Payment Method**, 
@@ -229,3 +229,4 @@ st.download_button(
     file_name="error_records.csv",
     mime="text/csv"
 )
+
