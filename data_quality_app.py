@@ -5,13 +5,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import re
 
-# CONSTANTS
-Placeholders = ["UNKNOWN", "ERROR", "", " "]
-Completeness_Threshold = 90
-Validity_Threshold = 90
-Uniqueness_Threshold = 95
-Accuracy_Threshold = 90
-
 # PAGE CONFIG
 st.set_page_config(
     page_title="Data Quality & Error Cluster Dashboard",
@@ -25,6 +18,13 @@ Explore data completeness, validity, and accuracy across transactions.
 Identify recurring error clusters by **Location** and **Payment Method**, 
 and track data quality trends over time.
 """)
+
+# CONSTANTS
+Placeholders = ["UNKNOWN", "ERROR", "", " "]
+Completeness_Threshold = 90
+Validity_Threshold = 90
+Uniqueness_Threshold = 95
+Accuracy_Threshold = 90
 
 # LOAD DATA FUNCTION
 @st.cache_data
@@ -229,4 +229,5 @@ st.download_button(
     file_name="error_records.csv",
     mime="text/csv"
 )
+
 
