@@ -3,7 +3,6 @@
 ## Project Overview
 This project is an interactive Streamlit dashboard that analyzes and visualizes data quality metrics and error clusters in transactional datasets.  
 It helps identify issues in completeness, validity, and accuracy. This provides quick insights into where and how data quality problems occur.
-This is the first version and updates will be done regularly.
 
 For a live demo, check the streamlit app Here: [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://data-quality-assess.streamlit.app/)
 
@@ -68,5 +67,8 @@ It intentionally includes missing, invalid, and inconsistent values to demonstra
 | Notebook Analysis | Jupyter Notebook |
 
 ---
+
+## Update & Version Log
+- Version 1.0 (Octobe 2025)
 
 
