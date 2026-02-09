@@ -69,6 +69,6 @@ It intentionally includes missing, invalid, and inconsistent values to demonstra
 ---
 
 ## Update & Version Log
-- Version 1.0 (Octobe 2025)
+- Version 1.0 (October 2025)
 
 
